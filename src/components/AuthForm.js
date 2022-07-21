@@ -3,38 +3,35 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import { styles } from "../utils/styles";
 import { useAuth } from "../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import useAuthFormState from "../hooks/useAuthFormState";
 
 function AuthForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confPassword, setConfPassword] = useState("");
+  const [
+    email,
+    password,
+    confPass,
+    handleEmail,
+    handlePassword,
+    handleConfPass,
+    reset,
+  ] = useAuthFormState("", "", "");
   const [error, setError] = useState("");
   const { signUp } = useAuth();
-
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const onConfPasswordChange = (e) => {
-    setConfPassword(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confPassword) {
+    if (password !== confPass) {
       return setError("Passwords do not match");
     }
 
     try {
       setError("");
       await signUp(email, password);
+      reset();
     } catch (err) {
       toast.error(err.message);
+      reset();
     }
   };
 
@@ -51,7 +48,7 @@ function AuthForm() {
               <Form.Label style={styles.FormLable}>Email Address</Form.Label>
               <Form.Control
                 value={email}
-                onChange={onEmailChange}
+                onChange={(e) => handleEmail(e)}
                 type="email"
                 placeholder="Enter email"
                 required
@@ -61,7 +58,7 @@ function AuthForm() {
               <Form.Label style={styles.FormLable}>Password</Form.Label>
               <Form.Control
                 value={password}
-                onChange={onPasswordChange}
+                onChange={(e) => handlePassword(e)}
                 type="password"
                 placeholder="Enter password"
                 required
@@ -70,8 +67,8 @@ function AuthForm() {
             <Form.Group controlId="confirm-password">
               <Form.Label style={styles.FormLable}>Confirm Password</Form.Label>
               <Form.Control
-                value={confPassword}
-                onChange={onConfPasswordChange}
+                value={confPass}
+                onChange={(e) => handleConfPass(e)}
                 type="password"
                 placeholder="Confirm password"
                 required
