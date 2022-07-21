@@ -4,6 +4,7 @@ import { styles } from "../utils/styles";
 import { useAuth } from "../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import useAuthFormState from "../hooks/useAuthFormState";
+import { useNavigate } from "react-router-dom";
 
 function AuthForm() {
   const [
@@ -17,6 +18,7 @@ function AuthForm() {
   ] = useAuthFormState("", "", "");
   const [error, setError] = useState("");
   const { signUp } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
