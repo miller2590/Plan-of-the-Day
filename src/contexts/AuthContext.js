@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
   }
 
   function logOut() {
-    return signOut();
+    return signOut(auth);
   }
 
   useEffect(() => {
