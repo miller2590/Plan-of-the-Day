@@ -3,6 +3,7 @@ const AppContainer = {
   alignItems: "center",
   justifyContent: "center",
   minHeight: "100vh",
+  padding: "0",
 };
 
 const LandingPageContainer = {

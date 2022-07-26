@@ -68,7 +68,6 @@ function AuthForm() {
                 value={email}
                 onChange={(e) => handleEmail(e)}
                 type="email"
-                placeholder="Enter email"
                 required
               />
             </Form.Group>
@@ -78,7 +77,6 @@ function AuthForm() {
                 value={password}
                 onChange={(e) => handlePassword(e)}
                 type="password"
-                placeholder="Enter password"
                 required
               />
             </Form.Group>
@@ -91,7 +89,6 @@ function AuthForm() {
                   value={confPass}
                   onChange={(e) => handleConfPass(e)}
                   type="password"
-                  placeholder="Confirm password"
                   required
                 />
               </Form.Group>
