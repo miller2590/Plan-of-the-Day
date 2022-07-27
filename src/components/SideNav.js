@@ -3,33 +3,41 @@ import { Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import CreateTodoList from "./Todo/CreateTodoList";
 
-function SideNav() {
+function SideNav({ handleCreateTodoTool }) {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleLogOut = async () => {
     try {
       await logOut().then(navigate("/"));
     } catch (err) {
       toast.error(err.message);
     }
   };
+
   return (
     <div
       style={{
         display: "flex",
         border: "1px solid black",
-        flexGrow: "1",
+        width: "fit-content",
+        height: "100vh",
+        flexShrink: "0",
         flexDirection: "column",
-        justifyContent: "space-between",
         alignItems: "center",
         padding: "1rem",
       }}
     >
       <h4 style={{ padding: "1rem" }}>Plan of the Day</h4>
+      <CreateTodoList handleCreateTodoTool={handleCreateTodoTool} />
 
-      <Button className="w-100" onClick={handleClick}>
+      <Button
+        style={{ marginTop: "auto" }}
+        className="w-100"
+        onClick={handleLogOut}
+      >
         <ToastContainer />
         Log Out
       </Button>

@@ -1,17 +1,17 @@
 import React from "react";
+import ToolList from "./ToolList";
 
-function MainContent() {
+function MainContent({ tools }) {
   return (
     <div
       style={{
         display: "flex",
-        flexGrow: "20",
-
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
       }}
     >
       <h1 style={{ marginTop: "3rem" }}>Create Your Plan</h1>
+      <ToolList tools={tools} />
     </div>
   );
 }
