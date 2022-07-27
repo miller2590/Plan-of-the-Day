@@ -5,9 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
-const firebase = require("firebase");
-// Required for side-effects
-require("firebase/firestore");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
