@@ -6,6 +6,9 @@ function TodoToolCard() {
     <Card>
       <Card.Body>
         <Card.Title>Todo List</Card.Title>
+        <Card.Text style={{ flexWrap: "wrap" }}>
+          ljla;skdj fl;ksjdf l;kajsd fl;kjasd flkjasd fl;kjasfd glkjadsfgl;kj
+        </Card.Text>
       </Card.Body>
     </Card>
   );

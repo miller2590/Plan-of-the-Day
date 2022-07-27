@@ -28,6 +28,8 @@ function SideNav({ handleCreateTodoTool }) {
         flexDirection: "column",
         alignItems: "center",
         padding: "1rem",
+        position: "sticky",
+        top: "0",
       }}
     >
       <h4 style={{ padding: "1rem" }}>Plan of the Day</h4>
