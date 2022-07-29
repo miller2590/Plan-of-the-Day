@@ -6,7 +6,7 @@ import {
   signOut,
   getAuth,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { app } from "../firebase-config";
 
@@ -27,10 +27,11 @@ export function AuthProvider({ children }) {
   async function signUp(email, password) {
     await createUserWithEmailAndPassword(auth, email, password);
     try {
-      const usersRef = await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "users", auth.currentUser.uid), {
         user: auth.currentUser.uid,
+        email: email,
       });
-      console.log("Document wirtten with ID: ", usersRef.id);
+      console.log("Document wirtten with ID: ", auth.currentUser.uid);
     } catch (e) {
       console.log(e.message);
     }
