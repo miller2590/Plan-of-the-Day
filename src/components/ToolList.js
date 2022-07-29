@@ -6,7 +6,7 @@ function ToolList({ tools }) {
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {tools.length === 0 ? (
-        <h3>You have no Plan!</h3>
+        <h3 style={{ padding: "1rem" }}>You have no Plans!</h3>
       ) : (
         tools.map((tool, i) => (
           <ListGroup key={i} variant="flush">

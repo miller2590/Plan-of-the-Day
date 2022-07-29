@@ -1,14 +1,15 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 function TodoToolCard() {
   return (
-    <Card>
+    <Card style={{ textAlign: "center" }}>
       <Card.Body>
         <Card.Title>Todo List</Card.Title>
         <Card.Text style={{ flexWrap: "wrap" }}>
-          ljla;skdj fl;ksjdf l;kajsd fl;kjasd flkjasd fl;kjasfd glkjadsfgl;kj
+          Create your todo list!
         </Card.Text>
+        <Button variant="primary">Let's Go!</Button>
       </Card.Body>
     </Card>
   );

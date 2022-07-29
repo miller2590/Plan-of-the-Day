@@ -11,7 +11,13 @@ function Home() {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
       <SideNav handleCreateTodoTool={handleCreateTodoTool} />
       <MainContent tools={tools} />
     </div>

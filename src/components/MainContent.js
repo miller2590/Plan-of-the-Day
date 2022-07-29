@@ -10,8 +10,10 @@ function MainContent({ tools }) {
         alignItems: "flex-start",
       }}
     >
-      <h1 style={{ marginTop: "3rem" }}>Create Your Plan</h1>
-      <ToolList tools={tools} />
+      <div>
+        <h1 style={{ padding: "1rem" }}>Create Your Plan</h1>
+        <ToolList tools={tools} />
+      </div>
     </div>
   );
 }
