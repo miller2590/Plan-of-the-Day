@@ -19,6 +19,8 @@ function Home() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
+    // This is returning everything twice...
+    // You should fix this future me
     const fetch = async () => {
       const querySnap = await getDocs(
         collection(db, "users", currentUser.uid, "todos")
@@ -29,6 +31,7 @@ function Home() {
           ...prevTools,
           <TodoToolCard handleShow={handleShow} id={doc.id} />,
         ]);
+        console.log(doc.id);
       });
     };
     fetch();
@@ -54,10 +57,10 @@ function Home() {
       {}
     );
 
-    // setTools((prevTools) => [
-    //   ...prevTools,
-    //   <TodoToolCard handleShow={handleShow} id={newTodo.id} />,
-    // ]);
+    setTools((prevTools) => [
+      ...prevTools,
+      <TodoToolCard handleShow={handleShow} id={newTodo.id} />,
+    ]);
   };
 
   return (
