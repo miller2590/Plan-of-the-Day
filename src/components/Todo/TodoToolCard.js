@@ -1,15 +1,29 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, CloseButton } from "react-bootstrap";
 
-function TodoToolCard() {
+function TodoToolCard({ id, handleShow }) {
   return (
     <Card style={{ textAlign: "center" }}>
-      <Card.Body>
-        <Card.Title>Todo List</Card.Title>
+      <Card.Body
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: ".5rem",
+        }}
+      >
+        <CloseButton
+          style={{
+            fontSize: "small",
+          }}
+          onClick={() => handleShow(id)}
+        />
+        <Card.Title>{id ? id : "Todo List"}</Card.Title>
         <Card.Text style={{ flexWrap: "wrap" }}>
           Create your todo list!
         </Card.Text>
-        <Button variant="primary">Let's Go!</Button>
+        <Button size="sm" variant="primary">
+          Let's Go!
+        </Button>
       </Card.Body>
     </Card>
   );

@@ -1,7 +1,8 @@
 import React from "react";
 import ToolList from "./ToolList";
+import CloseModal from "../components/CloseModal";
 
-function MainContent({ tools }) {
+function MainContent({ tools, show, handleClose, closeId, handleDelete }) {
   return (
     <div
       style={{
@@ -10,6 +11,12 @@ function MainContent({ tools }) {
         alignItems: "flex-start",
       }}
     >
+      <CloseModal
+        show={show}
+        handleClose={handleClose}
+        closeId={closeId}
+        handleDelete={handleDelete}
+      />
       <div>
         <h1 style={{ padding: "1rem" }}>Create Your Plan</h1>
         <ToolList tools={tools} />

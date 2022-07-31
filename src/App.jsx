@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />}>
-            <Route path="todo/:userId" />
+            <Route path="todo" />
           </Route>
         </Routes>
       </AuthProvider>
