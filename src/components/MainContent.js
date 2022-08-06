@@ -2,7 +2,14 @@ import React from "react";
 import ToolList from "./ToolList";
 import CloseModal from "../components/CloseModal";
 
-function MainContent({ tools, show, handleClose, closeId, handleDelete }) {
+function MainContent({
+  tools,
+  show,
+  handleClose,
+  closeId,
+  handleDelete,
+  handleShow,
+}) {
   return (
     <div
       style={{
@@ -19,7 +26,7 @@ function MainContent({ tools, show, handleClose, closeId, handleDelete }) {
       />
       <div>
         <h1 style={{ padding: "1rem" }}>Create Your Plan</h1>
-        <ToolList tools={tools} />
+        <ToolList handleShow={handleShow} tools={tools} />
       </div>
     </div>
   );
