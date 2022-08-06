@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideNav from "../components/SideNav";
 import MainContent from "../components/MainContent";
-import TodoToolCard from "../components/Todo/TodoToolCard";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase-config";
 import {
@@ -9,7 +8,8 @@ import {
   addDoc,
   doc,
   deleteDoc,
-  getDocs,
+  query,
+  onSnapshot,
 } from "firebase/firestore";
 
 function Home() {
@@ -19,22 +19,17 @@ function Home() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    // This is returning everything twice...
-    // You should fix this future me
-    const fetch = async () => {
-      const querySnap = await getDocs(
-        collection(db, "users", currentUser.uid, "todos")
-      );
-
+    const todoRef = query(collection(db, "users", currentUser.uid, "todos"));
+    const unsub = onSnapshot(todoRef, (querySnap) => {
+      const docIdRef = [];
       querySnap.forEach((doc) => {
-        setTools((prevTools) => [
-          ...prevTools,
-          <TodoToolCard handleShow={handleShow} id={doc.id} />,
-        ]);
-        console.log(doc.id);
+        docIdRef.push(doc.id);
       });
+      setTools(docIdRef);
+    });
+    return () => {
+      unsub();
     };
-    fetch();
   }, [currentUser.uid]);
 
   const handleClose = () => setShow(false);
@@ -48,19 +43,10 @@ function Home() {
     handleClose();
   };
 
-  // FIX THIS NEXT LOSER!!!!!
   const handleCreateTodoTool = async () => {
     const userRef = collection(db, "users");
 
-    const newTodo = await addDoc(
-      collection(userRef, currentUser.uid, "todos"),
-      {}
-    );
-
-    setTools((prevTools) => [
-      ...prevTools,
-      <TodoToolCard handleShow={handleShow} id={newTodo.id} />,
-    ]);
+    await addDoc(collection(userRef, currentUser.uid, "todos"), {});
   };
 
   return (
@@ -76,6 +62,7 @@ function Home() {
         tools={tools}
         show={show}
         handleClose={handleClose}
+        handleShow={handleShow}
         closeId={closeId}
         handleDelete={handleDelete}
       />
