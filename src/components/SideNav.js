@@ -20,23 +20,26 @@ function SideNav({ handleCreateTodoTool }) {
   return (
     <div
       style={{
-        display: "flex",
+        // display: "flex",
+
+        // width: "fit-content",
+        // height: "100vh",
+        // flexShrink: "0",
+        // flexDirection: "column",
+        // alignItems: "center",
+        // padding: "1rem",
+        // position: "sticky",
+        // top: "0",
         border: "1px solid black",
-        width: "fit-content",
-        height: "100vh",
-        flexShrink: "0",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "1rem",
-        position: "sticky",
-        top: "0",
+        minHeight: "100vh",
+        minWidth: "350px",
       }}
     >
       <h4 style={{ padding: "1rem" }}>Plan of the Day</h4>
       <CreateTodoList handleCreateTodoTool={handleCreateTodoTool} />
 
       <Button
-        style={{ marginTop: "auto" }}
+        // style={{ marginTop: "auto" }}
         className="w-100"
         onClick={handleLogOut}
       >

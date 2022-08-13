@@ -1,14 +1,9 @@
-const AppContainer = {
+const LandingPageContainer = {
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
-  minHeight: "100vh",
-  padding: "0",
-};
-
-const LandingPageContainer = {
-  width: "100%",
-  maxWidth: "400px",
+  maxWidth: "450px",
+  height: "100vh",
+  margin: "auto",
 };
 
 const FormLable = {
@@ -16,7 +11,6 @@ const FormLable = {
 };
 
 export const styles = {
-  AppContainer: AppContainer,
   LandingPageContainer: LandingPageContainer,
   FormLable: FormLable,
 };

@@ -5,8 +5,10 @@ import { styles } from "../utils/styles";
 function LandingPage() {
   return (
     <div style={styles.LandingPageContainer}>
-      <h1 className="text-center mb-4">Plan Of The Day</h1>
-      <AuthForm />
+      <div style={{ width: "100%", justifyContent: "center" }}>
+        <h1 className="text-center mb-4">Plan Of The Day</h1>
+        <AuthForm />
+      </div>
     </div>
   );
 }
