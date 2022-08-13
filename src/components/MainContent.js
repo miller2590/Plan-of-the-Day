@@ -12,11 +12,13 @@ function MainContent({
 }) {
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-      }}
+      style={
+        {
+          // display: "flex",
+          // flexDirection: "column",
+          // alignItems: "flex-start",
+        }
+      }
     >
       <CloseModal
         show={show}

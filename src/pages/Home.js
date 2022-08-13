@@ -53,8 +53,8 @@ function Home() {
     <div
       style={{
         display: "flex",
-        minHeight: "100vh",
-        width: "100%",
+        widht: "100%",
+        alignItems: "stretch",
       }}
     >
       <SideNav handleCreateTodoTool={handleCreateTodoTool} />
