@@ -1,6 +1,7 @@
 import React from "react";
 import ToolList from "./ToolList";
 import CloseModal from "../components/CloseModal";
+import { Container, Row } from "react-bootstrap";
 
 function MainContent({
   tools,
@@ -11,26 +12,18 @@ function MainContent({
   handleShow,
 }) {
   return (
-    <div
-      style={
-        {
-          // display: "flex",
-          // flexDirection: "column",
-          // alignItems: "flex-start",
-        }
-      }
-    >
+    <Row className="main-content-container vh-100">
       <CloseModal
         show={show}
         handleClose={handleClose}
         closeId={closeId}
         handleDelete={handleDelete}
       />
-      <div>
-        <h1 style={{ padding: "1rem" }}>Create Your Plan</h1>
+
+      <Container className="tool-list-container">
         <ToolList handleShow={handleShow} tools={tools} />
-      </div>
-    </div>
+      </Container>
+    </Row>
   );
 }
 

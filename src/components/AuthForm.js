@@ -54,7 +54,7 @@ function AuthForm() {
   return (
     <>
       <ToastContainer />
-      <Card>
+      <Card className="m-4">
         <Card.Body>
           <h2 className="text-center mb-4">
             {isSignUp ? "Sign Up" : " Sign In"}

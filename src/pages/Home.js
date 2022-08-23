@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SideNav from "../components/SideNav";
+import MainNav from "../components/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase-config";
@@ -11,6 +11,7 @@ import {
   query,
   onSnapshot,
 } from "firebase/firestore";
+import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {
   const [tools, setTools] = useState([]);
@@ -50,23 +51,26 @@ function Home() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        widht: "100%",
-        alignItems: "stretch",
-      }}
-    >
-      <SideNav handleCreateTodoTool={handleCreateTodoTool} />
-      <MainContent
-        tools={tools}
-        show={show}
-        handleClose={handleClose}
-        handleShow={handleShow}
-        closeId={closeId}
-        handleDelete={handleDelete}
-      />
-    </div>
+    <>
+      <Container fluid>
+        <Row className="flex-xl-nowrap ">
+          <Col className="col-xl-2 col-md-3 col-12 d-flex flex-column p-0  ">
+            <MainNav handleCreateTodoTool={handleCreateTodoTool} />
+          </Col>
+
+          <Col className="col-xl-8 col-md-9 col-12">
+            <MainContent
+              tools={tools}
+              show={show}
+              closeId={closeId}
+              handleClose={handleClose}
+              handleShow={handleShow}
+              handleDelete={handleDelete}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 
