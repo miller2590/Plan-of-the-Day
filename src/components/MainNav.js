@@ -4,6 +4,7 @@ import "./MainNav.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import "./MainNav.css";
 
 function MainNav({ handleCreateTodoTool }) {
   const { logOut } = useAuth();
@@ -21,8 +22,7 @@ function MainNav({ handleCreateTodoTool }) {
     <Navbar
       bg="light"
       expand="md"
-      className="flex-md-column flex-md-wrap h-100 p-0 "
-      sticky="top"
+      className="nav-container flex-md-column h-100 p-0"
     >
       <ToastContainer />
       <Container className="h-100 flex-md-column p-2">

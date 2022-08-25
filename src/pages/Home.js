@@ -51,26 +51,24 @@ function Home() {
   };
 
   return (
-    <>
-      <Container fluid>
-        <Row className="flex-xl-nowrap ">
-          <Col className="col-xl-2 col-md-3 col-12 d-flex flex-column p-0  ">
-            <MainNav handleCreateTodoTool={handleCreateTodoTool} />
-          </Col>
+    <Container fluid>
+      <Row className="flex-xl-nowrap">
+        <Col className=" nav-col col-xl-2 col-md-3 col-12 d-flex flex-column p-0">
+          <MainNav handleCreateTodoTool={handleCreateTodoTool} />
+        </Col>
 
-          <Col className="col-xl-8 col-md-9 col-12">
-            <MainContent
-              tools={tools}
-              show={show}
-              closeId={closeId}
-              handleClose={handleClose}
-              handleShow={handleShow}
-              handleDelete={handleDelete}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </>
+        <Col className="col-xl-8 col-md-9 col-12">
+          <MainContent
+            tools={tools}
+            show={show}
+            closeId={closeId}
+            handleClose={handleClose}
+            handleShow={handleShow}
+            handleDelete={handleDelete}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

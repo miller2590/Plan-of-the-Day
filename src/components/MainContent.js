@@ -13,6 +13,9 @@ function MainContent({
 }) {
   return (
     <Row className="main-content-container vh-100">
+      <header>
+        <h1>Create your plan!</h1>
+      </header>
       <CloseModal
         show={show}
         handleClose={handleClose}
