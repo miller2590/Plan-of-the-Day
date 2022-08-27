@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MainNav from "../components/MainNav";
+import MainNav from "../components/MainNav/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase-config";
@@ -14,19 +14,19 @@ import {
 import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {
-  const [tools, setTools] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [show, setShow] = useState(false);
   const [closeId, setCloseId] = useState("");
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const todoRef = query(collection(db, "users", currentUser.uid, "todos"));
+    const todoRef = query(collection(db, "users", currentUser.uid, "projects"));
     const unsub = onSnapshot(todoRef, (querySnap) => {
       const docIdRef = [];
       querySnap.forEach((doc) => {
         docIdRef.push(doc.id);
       });
-      setTools(docIdRef);
+      setProjects(docIdRef);
     });
     return () => {
       unsub();
@@ -40,14 +40,14 @@ function Home() {
   };
 
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "users", currentUser.uid, "todos", id));
+    await deleteDoc(doc(db, "users", currentUser.uid, "projects", id));
     handleClose();
   };
 
   const handleCreateTodoTool = async () => {
     const userRef = collection(db, "users");
 
-    await addDoc(collection(userRef, currentUser.uid, "todos"), {});
+    await addDoc(collection(userRef, currentUser.uid, "projects"), {});
   };
 
   return (
@@ -59,7 +59,7 @@ function Home() {
 
         <Col className="col-xl-8 col-md-9 col-12">
           <MainContent
-            tools={tools}
+            projects={projects}
             show={show}
             closeId={closeId}
             handleClose={handleClose}

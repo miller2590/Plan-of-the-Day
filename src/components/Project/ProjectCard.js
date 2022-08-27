@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Button, CloseButton } from "react-bootstrap";
 
-function TodoToolCard({ id, handleShow }) {
+function ProjectCard({ id, handleShow }) {
   return (
-    <Card className="m-1 w-100">
+    <Card className="m-1">
       <Card.Body
         style={{
           display: "flex",
@@ -17,8 +17,8 @@ function TodoToolCard({ id, handleShow }) {
           }}
           onClick={() => handleShow(id)}
         />
-        <Card.Title>{id ? id : "Todo List"}</Card.Title>
-        <Card.Text>Create your todo list!</Card.Text>
+        <Card.Title>{id ? id : "New Project"}</Card.Title>
+        <Card.Text>Create your Project!</Card.Text>
         <Button size="sm" variant="primary">
           Let's Go!
         </Button>
@@ -27,4 +27,4 @@ function TodoToolCard({ id, handleShow }) {
   );
 }
 
-export default TodoToolCard;
+export default ProjectCard;

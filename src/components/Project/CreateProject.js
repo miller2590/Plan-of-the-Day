@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-function CreateTodoList({ handleCreateTodoTool }) {
+function CreateProject({ handleCreateTodoTool }) {
   const handleClick = () => {
     handleCreateTodoTool();
   };
@@ -12,4 +12,4 @@ function CreateTodoList({ handleCreateTodoTool }) {
   );
 }
 
-export default CreateTodoList;
+export default CreateProject;

@@ -1,10 +1,10 @@
 import React from "react";
-import ToolList from "./ToolList";
+import ProjectList from "./Project/ProjectList";
 import CloseModal from "../components/CloseModal";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 function MainContent({
-  tools,
+  projects,
   show,
   handleClose,
   closeId,
@@ -12,10 +12,17 @@ function MainContent({
   handleShow,
 }) {
   return (
-    <Row className="main-content-container vh-100">
-      <header>
-        <h1>Create your plan!</h1>
-      </header>
+    <Row className="main-content-container ">
+      <Col
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <header>
+          <h1>Dashboard</h1>
+        </header>
+      </Col>
       <CloseModal
         show={show}
         handleClose={handleClose}
@@ -23,8 +30,8 @@ function MainContent({
         handleDelete={handleDelete}
       />
 
-      <Container className="tool-list-container">
-        <ToolList handleShow={handleShow} tools={tools} />
+      <Container className="project-list-container">
+        <ProjectList handleShow={handleShow} projects={projects} />
       </Container>
     </Row>
   );
