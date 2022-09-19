@@ -4,8 +4,9 @@ import "./MainNav.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import CreateProject from "../Project/CreateProject";
 
-function MainNav({ handleCreateTodoTool }) {
+function MainNav({ handleCreateProject }) {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
@@ -34,9 +35,7 @@ function MainNav({ handleCreateTodoTool }) {
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
 
-            <Button size="sm" variant="success" onClick={handleCreateTodoTool}>
-              Create a Project
-            </Button>
+            <CreateProject handleCreateProject={handleCreateProject} />
 
             <Button size="sm" onClick={handleLogOut} className="w-75 mt-2">
               Logout

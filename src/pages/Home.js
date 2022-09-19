@@ -44,7 +44,7 @@ function Home() {
     handleClose();
   };
 
-  const handleCreateTodoTool = async () => {
+  const handleCreateProject = async () => {
     const userRef = collection(db, "users");
 
     await addDoc(collection(userRef, currentUser.uid, "projects"), {});
@@ -54,7 +54,7 @@ function Home() {
     <Container fluid>
       <Row className="flex-xl-nowrap">
         <Col className=" nav-col col-xl-2 col-md-3 col-12 d-flex flex-column p-0">
-          <MainNav handleCreateTodoTool={handleCreateTodoTool} />
+          <MainNav handleCreateProject={handleCreateProject} />
         </Col>
 
         <Col className="col-xl-8 col-md-9 col-12">
