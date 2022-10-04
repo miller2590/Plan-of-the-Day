@@ -12,7 +12,7 @@ function MainContent({
   handleShow,
 }) {
   return (
-    <Row className="main-content-container ">
+    <Row className="main-content-container">
       <Col
         style={{
           display: "flex",

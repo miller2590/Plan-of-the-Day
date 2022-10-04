@@ -16,6 +16,8 @@ import { Container, Row, Col } from "react-bootstrap";
 function Home() {
   const [projects, setProjects] = useState([]);
   const [show, setShow] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
+  const [title, setTitle] = useState("");
   const [closeId, setCloseId] = useState("");
   const { currentUser } = useAuth();
 
@@ -39,22 +41,43 @@ function Home() {
     setCloseId(id);
   };
 
+  // Create a context for these, or use authFormState maybe?
+  const handleCloseTitle = () => setShowTitle(false);
+
+  const handleShowTitle = () => {
+    setShowTitle(true);
+  };
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  // *********************************************************
+
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "users", currentUser.uid, "projects", id));
     handleClose();
   };
 
-  const handleCreateProject = async () => {
+  const handleCreateProject = async (title) => {
     const userRef = collection(db, "users");
 
-    await addDoc(collection(userRef, currentUser.uid, "projects"), {});
+    await addDoc(collection(userRef, currentUser.uid, "projects"), {
+      title: title,
+    });
   };
 
   return (
     <Container fluid>
       <Row className="flex-xl-nowrap">
         <Col className=" nav-col col-xl-2 col-md-3 col-12 d-flex flex-column p-0">
-          <MainNav handleCreateProject={handleCreateProject} />
+          <MainNav
+            handleCreateProject={handleCreateProject}
+            handleShowTitle={handleShowTitle}
+            handleCloseTitle={handleCloseTitle}
+            showTitle={showTitle}
+            title={title}
+            handleTitle={handleTitle}
+          />
         </Col>
 
         <Col className="col-xl-8 col-md-9 col-12">
