@@ -9,8 +9,12 @@ function ProjectList({ projects, handleShow }) {
         <h4 style={{ textAlign: "center" }}>You have no Plans!</h4>
       ) : (
         projects.map((project) => (
-          <Col key={project} className="col-sm-4">
-            <ProjectCard handleShow={handleShow} id={project} />
+          <Col key={project.id} className="col-sm-6 col-md-4">
+            <ProjectCard
+              handleShow={handleShow}
+              id={project.id}
+              title={project.title}
+            />
           </Col>
         ))
       )}

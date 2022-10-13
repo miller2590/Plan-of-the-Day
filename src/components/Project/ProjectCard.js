@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, CloseButton } from "react-bootstrap";
 
-function ProjectCard({ id, handleShow }) {
+function ProjectCard({ id, title, handleShow }) {
   return (
     <Card className="m-1">
       <Card.Body
@@ -17,7 +17,7 @@ function ProjectCard({ id, handleShow }) {
           }}
           onClick={() => handleShow(id)}
         />
-        <Card.Title>{id ? id : "New Project"}</Card.Title>
+        <Card.Title>{title ? title : "New Project"}</Card.Title>
         <Card.Text>Create your Project!</Card.Text>
         <Button size="sm" variant="primary">
           Let's Go!

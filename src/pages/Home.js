@@ -26,7 +26,8 @@ function Home() {
     const unsub = onSnapshot(todoRef, (querySnap) => {
       const docIdRef = [];
       querySnap.forEach((doc) => {
-        docIdRef.push(doc.id);
+        // Project card Object
+        docIdRef.push({ id: doc.id, title: doc.data().title });
       });
       setProjects(docIdRef);
     });
@@ -41,7 +42,7 @@ function Home() {
     setCloseId(id);
   };
 
-  // Create a context for these, or use authFormState maybe?
+  // Create a context for these, or use authFormState maybe?************
   const handleCloseTitle = () => setShowTitle(false);
 
   const handleShowTitle = () => {
@@ -51,8 +52,9 @@ function Home() {
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
-  // *********************************************************
+  // *******************************************************************
 
+  // Firebase Calls ****************************************************
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "users", currentUser.uid, "projects", id));
     handleClose();
@@ -65,6 +67,8 @@ function Home() {
       title: title,
     });
   };
+
+  // *******************************************************************
 
   return (
     <Container fluid>
