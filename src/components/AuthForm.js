@@ -3,6 +3,7 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import { styles } from "../utils/styles";
 import { useAuth } from "../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAuthFormState from "../hooks/useAuthFormState";
 import { useNavigate } from "react-router-dom";
 import useToggleState from "../hooks/useToggleState";

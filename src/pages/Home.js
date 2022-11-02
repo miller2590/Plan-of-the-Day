@@ -3,6 +3,7 @@ import MainNav from "../components/MainNav/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase-config";
+
 import {
   collection,
   addDoc,
