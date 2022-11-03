@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, Button, CloseButton } from "react-bootstrap";
 
+import { Link } from "react-router-dom";
+
 function ProjectCard({ id, title, handleShow }) {
   return (
     <Card className="m-1">
@@ -19,9 +21,12 @@ function ProjectCard({ id, title, handleShow }) {
         />
         <Card.Title>{title ? title : "New Project"}</Card.Title>
         <Card.Text>Create your Project!</Card.Text>
-        <Button size="sm" variant="primary">
-          Let's Go!
-        </Button>
+        {/* Create dynamic URL */}
+        <Link to="workSpace">
+          <Button size="sm" variant="primary">
+            Let's Go!
+          </Button>
+        </Link>
       </Card.Body>
     </Card>
   );
