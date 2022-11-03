@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/home/workSpace",
+    path: "/home/workSpace/:id",
     element: <WorkSpace />,
   },
 ]);

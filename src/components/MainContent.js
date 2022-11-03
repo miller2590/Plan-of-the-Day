@@ -29,7 +29,6 @@ function MainContent({
         closeId={closeId}
         handleDelete={handleDelete}
       />
-
       <Container className="project-list-container">
         <ProjectList handleShow={handleShow} projects={projects} />
       </Container>

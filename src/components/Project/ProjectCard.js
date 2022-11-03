@@ -21,8 +21,8 @@ function ProjectCard({ id, title, handleShow }) {
         />
         <Card.Title>{title ? title : "New Project"}</Card.Title>
         <Card.Text>Create your Project!</Card.Text>
-        {/* Create dynamic URL */}
-        <Link to="workSpace">
+
+        <Link to={`workSpace/${id}`}>
           <Button size="sm" variant="primary">
             Let's Go!
           </Button>
