@@ -2,27 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { AuthProvider } from "./contexts/AuthContext";
-import LandingPage from "./pages/LandingPage";
-import Home from "./pages/Home";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/home",
-    element: <Home />,
-  },
-]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <App />
     </AuthProvider>
   </React.StrictMode>
 );
