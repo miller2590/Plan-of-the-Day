@@ -9,7 +9,7 @@ function MainContent({
   handleClose,
   closeId,
   handleDelete,
-  handleShow,
+  handleShowModal,
 }) {
   return (
     <Row className="main-content-container">
@@ -30,7 +30,7 @@ function MainContent({
         handleDelete={handleDelete}
       />
       <Container className="project-list-container">
-        <ProjectList handleShow={handleShow} projects={projects} />
+        <ProjectList handleShowModal={handleShowModal} projects={projects} />
       </Container>
     </Row>
   );

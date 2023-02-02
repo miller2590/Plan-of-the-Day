@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MainNav from "../components/MainNav/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
@@ -22,8 +22,12 @@ function Home() {
   const [closeId, setCloseId] = useState("");
   const { currentUser } = useAuth();
 
+  const todoRef = useMemo(
+    () => query(collection(db, "users", currentUser.uid, "projects")),
+    [currentUser.uid]
+  );
+
   useEffect(() => {
-    const todoRef = query(collection(db, "users", currentUser.uid, "projects"));
     const unsub = onSnapshot(todoRef, (querySnap) => {
       const docIdRef = [];
       querySnap.forEach((doc) => {
@@ -35,19 +39,16 @@ function Home() {
     return () => {
       unsub();
     };
-  }, [currentUser.uid]);
+  }, [todoRef]);
 
   const handleClose = () => setShow(false);
-  const handleShow = (id) => {
+  const handleShowModal = (id) => {
     setShow(true);
     setCloseId(id);
   };
 
-  // Create a context for these, or use authFormState maybe?************
-  const handleCloseTitle = () => setShowTitle(false);
-
-  const handleShowTitle = () => {
-    setShowTitle(true);
+  const toggleShowTitle = () => {
+    setShowTitle(!showTitle);
   };
 
   const handleTitle = (e) => {
@@ -77,8 +78,7 @@ function Home() {
         <Col className=" nav-col col-xl-2 col-md-3 col-12 d-flex flex-column p-0">
           <MainNav
             handleCreateProject={handleCreateProject}
-            handleShowTitle={handleShowTitle}
-            handleCloseTitle={handleCloseTitle}
+            toggleShowTitle={toggleShowTitle}
             showTitle={showTitle}
             title={title}
             handleTitle={handleTitle}
@@ -91,7 +91,7 @@ function Home() {
             show={show}
             closeId={closeId}
             handleClose={handleClose}
-            handleShow={handleShow}
+            handleShowModal={handleShowModal}
             handleDelete={handleDelete}
           />
         </Col>

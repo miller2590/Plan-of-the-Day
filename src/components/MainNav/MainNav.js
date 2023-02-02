@@ -8,11 +8,10 @@ import CreateProject from "../Project/CreateProject";
 
 function MainNav({
   handleCreateProject,
-  handleShowTitle,
+  toggleShowTitle,
   showTitle,
   title,
   handleTitle,
-  handleCloseTitle,
 }) {
   const { logOut } = useAuth();
   const navigate = useNavigate();
@@ -44,11 +43,10 @@ function MainNav({
 
             <CreateProject
               handleCreateProject={handleCreateProject}
-              handleShowTitle={handleShowTitle}
+              toggleShowTitle={toggleShowTitle}
               showTitle={showTitle}
               title={title}
               handleTitle={handleTitle}
-              handleCloseTitle={handleCloseTitle}
             />
 
             <Button size="sm" onClick={handleLogOut} className="w-75 mt-2">

@@ -9,10 +9,10 @@ function CloseModal({ show, handleClose, closeId, handleDelete }) {
         <Modal.Header closeButton>
           <Modal.Title>Delete Todo List</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delte this list?</Modal.Body>
+        <Modal.Body>Are you sure you want to delete this list?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cancel
           </Button>
           <Button variant="danger" onClick={() => handleDelete(closeId)}>
             Delete

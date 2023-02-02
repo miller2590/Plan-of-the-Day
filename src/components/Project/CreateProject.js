@@ -4,14 +4,13 @@ import TitleModal from "../TitleModal";
 
 function CreateProject({
   handleCreateProject,
-  handleShowTitle,
+  toggleShowTitle,
   showTitle,
   title,
   handleTitle,
-  handleCloseTitle,
 }) {
   const handleClick = () => {
-    handleShowTitle();
+    toggleShowTitle();
   };
   return (
     <div>
@@ -20,7 +19,7 @@ function CreateProject({
         handleCreateProject={handleCreateProject}
         title={title}
         handleTitle={handleTitle}
-        handleCloseTitle={handleCloseTitle}
+        toggleShowTitle={toggleShowTitle}
       />
       <Button size="sm" variant="success" onClick={handleClick}>
         Create a Project
