@@ -5,11 +5,11 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function MainContent({
   projects,
-  show,
-  handleClose,
+  showModal,
+  showModalId,
   closeId,
   handleDelete,
-  handleShowModal,
+  handleModal,
 }) {
   return (
     <Row className="main-content-container">
@@ -24,13 +24,14 @@ function MainContent({
         </header>
       </Col>
       <CloseModal
-        show={show}
-        handleClose={handleClose}
+        showModal={showModal}
+        showModalId={showModalId}
+        handleModal={handleModal}
         closeId={closeId}
         handleDelete={handleDelete}
       />
       <Container className="project-list-container">
-        <ProjectList handleShowModal={handleShowModal} projects={projects} />
+        <ProjectList handleModal={handleModal} projects={projects} />
       </Container>
     </Row>
   );

@@ -16,10 +16,9 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {
   const [projects, setProjects] = useState([]);
-  const [show, setShow] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [title, setTitle] = useState("");
-  const [closeId, setCloseId] = useState("");
+  const [showModal, setShowModal] = useState({ show: false, id: "" });
   const { currentUser } = useAuth();
 
   const todoRef = useMemo(
@@ -41,10 +40,8 @@ function Home() {
     };
   }, [todoRef]);
 
-  const handleClose = () => setShow(false);
-  const handleShowModal = (id) => {
-    setShow(true);
-    setCloseId(id);
+  const handleModal = (id) => {
+    setShowModal((prevState) => ({ show: !prevState.show, id: id || "" }));
   };
 
   const toggleShowTitle = () => {
@@ -59,7 +56,7 @@ function Home() {
   // Firebase Calls ****************************************************
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "users", currentUser.uid, "projects", id));
-    handleClose();
+    handleModal();
   };
 
   const handleCreateProject = async (title) => {
@@ -88,10 +85,9 @@ function Home() {
         <Col className="col-xl-8 col-md-9 col-12">
           <MainContent
             projects={projects}
-            show={show}
-            closeId={closeId}
-            handleClose={handleClose}
-            handleShowModal={handleShowModal}
+            showModal={showModal.show}
+            showModalId={showModal.id}
+            handleModal={handleModal}
             handleDelete={handleDelete}
           />
         </Col>

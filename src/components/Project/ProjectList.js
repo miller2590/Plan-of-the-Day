@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
 
-function ProjectList({ projects, handleShowModal }) {
+function ProjectList({ projects, handleModal }) {
   return (
     <Row>
       {projects.length === 0 ? (
@@ -11,7 +11,7 @@ function ProjectList({ projects, handleShowModal }) {
         projects.map((project) => (
           <Col key={project.id} xs={12} sm={6} md={4}>
             <ProjectCard
-              handleShowModal={handleShowModal}
+              handleModal={handleModal}
               id={project.id}
               title={project.title}
             />
