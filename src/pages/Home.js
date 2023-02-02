@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import MainNav from "../components/MainNav/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
@@ -40,13 +40,13 @@ function Home() {
     };
   }, [todoRef]);
 
-  const handleModal = (id) => {
+  const handleModal = useCallback((id) => {
     setShowModal((prevState) => ({ show: !prevState.show, id: id || "" }));
-  };
+  }, []);
 
-  const toggleShowTitle = () => {
+  const toggleShowTitle = useCallback(() => {
     setShowTitle(!showTitle);
-  };
+  }, [showTitle]);
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
