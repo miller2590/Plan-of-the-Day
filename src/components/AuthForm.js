@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuthFormState from "../hooks/useAuthFormState";
 import { useNavigate } from "react-router-dom";
-import useToggleState from "../hooks/useToggleState";
+import useSignInState from "../hooks/useSignInState";
 
 function AuthForm() {
   const [
@@ -19,7 +19,7 @@ function AuthForm() {
     reset,
   ] = useAuthFormState("", "", "");
   const [error, setError] = useState("");
-  const [isSignUp, toggle] = useToggleState(true);
+  const [isSignUp, toggle] = useSignInState(true);
   const { signUp, login } = useAuth();
   const navigate = useNavigate();
 

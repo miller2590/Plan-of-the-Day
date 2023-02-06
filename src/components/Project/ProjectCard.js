@@ -3,7 +3,7 @@ import { Card, Button, CloseButton } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 
-function ProjectCard({ id, title, handleShow }) {
+function ProjectCard({ id, title, handleModal }) {
   return (
     <Card className="m-1">
       <Card.Body
@@ -17,7 +17,7 @@ function ProjectCard({ id, title, handleShow }) {
           style={{
             fontSize: "small",
           }}
-          onClick={() => handleShow(id)}
+          onClick={() => handleModal(id)}
         />
         <Card.Title>{title ? title : "New Project"}</Card.Title>
         <Card.Text>Create your Project!</Card.Text>

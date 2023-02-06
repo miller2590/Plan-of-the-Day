@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import MainNav from "../components/MainNav/MainNav";
 import MainContent from "../components/MainContent";
 import { useAuth } from "../contexts/AuthContext";
@@ -16,14 +16,17 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Home() {
   const [projects, setProjects] = useState([]);
-  const [show, setShow] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [title, setTitle] = useState("");
-  const [closeId, setCloseId] = useState("");
+  const [showModal, setShowModal] = useState({ show: false, id: "" });
   const { currentUser } = useAuth();
 
+  const todoRef = useMemo(
+    () => query(collection(db, "users", currentUser.uid, "projects")),
+    [currentUser.uid]
+  );
+
   useEffect(() => {
-    const todoRef = query(collection(db, "users", currentUser.uid, "projects"));
     const unsub = onSnapshot(todoRef, (querySnap) => {
       const docIdRef = [];
       querySnap.forEach((doc) => {
@@ -35,20 +38,15 @@ function Home() {
     return () => {
       unsub();
     };
-  }, [currentUser.uid]);
+  }, [todoRef]);
 
-  const handleClose = () => setShow(false);
-  const handleShow = (id) => {
-    setShow(true);
-    setCloseId(id);
-  };
+  const handleModal = useCallback((id) => {
+    setShowModal((prevState) => ({ show: !prevState.show, id: id || "" }));
+  }, []);
 
-  // Create a context for these, or use authFormState maybe?************
-  const handleCloseTitle = () => setShowTitle(false);
-
-  const handleShowTitle = () => {
-    setShowTitle(true);
-  };
+  const toggleShowTitle = useCallback(() => {
+    setShowTitle(!showTitle);
+  }, [showTitle]);
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
@@ -58,7 +56,7 @@ function Home() {
   // Firebase Calls ****************************************************
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "users", currentUser.uid, "projects", id));
-    handleClose();
+    handleModal();
   };
 
   const handleCreateProject = async (title) => {
@@ -77,8 +75,7 @@ function Home() {
         <Col className=" nav-col col-xl-2 col-md-3 col-12 d-flex flex-column p-0">
           <MainNav
             handleCreateProject={handleCreateProject}
-            handleShowTitle={handleShowTitle}
-            handleCloseTitle={handleCloseTitle}
+            toggleShowTitle={toggleShowTitle}
             showTitle={showTitle}
             title={title}
             handleTitle={handleTitle}
@@ -88,10 +85,9 @@ function Home() {
         <Col className="col-xl-8 col-md-9 col-12">
           <MainContent
             projects={projects}
-            show={show}
-            closeId={closeId}
-            handleClose={handleClose}
-            handleShow={handleShow}
+            showModal={showModal.show}
+            showModalId={showModal.id}
+            handleModal={handleModal}
             handleDelete={handleDelete}
           />
         </Col>

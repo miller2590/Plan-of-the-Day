@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 
 function TitleModal({
   showTitle,
-  handleCloseTitle,
+  toggleShowTitle,
   handleCreateProject,
   title,
   handleTitle,
@@ -13,11 +13,11 @@ function TitleModal({
   const handleSave = (e) => {
     e.preventDefault();
     handleCreateProject(title);
-    handleCloseTitle();
+    toggleShowTitle();
   };
   return (
     <>
-      <Modal show={showTitle} onHide={handleCloseTitle}>
+      <Modal show={showTitle} onHide={toggleShowTitle}>
         <Modal.Header closeButton>
           <Modal.Title>New Project</Modal.Title>
         </Modal.Header>
@@ -37,7 +37,7 @@ function TitleModal({
             <Button variant="primary" type="submit">
               Save
             </Button>
-            <Button variant="danger" onClick={handleCloseTitle}>
+            <Button variant="danger" onClick={toggleShowTitle}>
               Cancel
             </Button>
           </Modal.Footer>
