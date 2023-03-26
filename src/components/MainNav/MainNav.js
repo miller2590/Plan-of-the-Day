@@ -6,13 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import CreateProject from "../Project/CreateProject";
 
-function MainNav({
-  handleCreateProject,
-  toggleShowTitle,
-  showTitle,
-  title,
-  handleTitle,
-}) {
+function MainNav() {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
@@ -41,13 +35,7 @@ function MainNav({
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
 
-            <CreateProject
-              handleCreateProject={handleCreateProject}
-              toggleShowTitle={toggleShowTitle}
-              showTitle={showTitle}
-              title={title}
-              handleTitle={handleTitle}
-            />
+            <CreateProject />
 
             <Button size="sm" onClick={handleLogOut} className="w-75 mt-2">
               Logout

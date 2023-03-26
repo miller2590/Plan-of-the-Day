@@ -12,7 +12,6 @@ function useToggleState(initialVal) {
       })
     );
   };
-  console.log(buttons.id);
   return [buttons, toggleButton];
 }
 

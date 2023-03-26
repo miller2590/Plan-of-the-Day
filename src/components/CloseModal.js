@@ -1,11 +1,14 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useMain } from "../contexts/MainContext";
 
-function CloseModal({ showModal, handleModal, showModalId, handleDelete }) {
+function CloseModal() {
+  const { showModal, handleModal, handleDelete } = useMain();
+
   return (
     <>
-      <Modal show={showModal} onHide={() => handleModal()}>
+      <Modal show={showModal.show} onHide={() => handleModal()}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Todo List</Modal.Title>
         </Modal.Header>
@@ -14,7 +17,7 @@ function CloseModal({ showModal, handleModal, showModalId, handleDelete }) {
           <Button variant="secondary" onClick={handleModal}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={() => handleDelete(showModalId)}>
+          <Button variant="danger" onClick={() => handleDelete(showModal.id)}>
             Delete
           </Button>
         </Modal.Footer>

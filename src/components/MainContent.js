@@ -3,14 +3,7 @@ import ProjectList from "./Project/ProjectList";
 import CloseModal from "../components/CloseModal";
 import { Container, Row, Col } from "react-bootstrap";
 
-function MainContent({
-  projects,
-  showModal,
-  showModalId,
-  closeId,
-  handleDelete,
-  handleModal,
-}) {
+function MainContent() {
   return (
     <Row className="main-content-container">
       <Col
@@ -23,15 +16,9 @@ function MainContent({
           <h1>Dashboard</h1>
         </header>
       </Col>
-      <CloseModal
-        showModal={showModal}
-        showModalId={showModalId}
-        handleModal={handleModal}
-        closeId={closeId}
-        handleDelete={handleDelete}
-      />
+      <CloseModal />
       <Container className="project-list-container">
-        <ProjectList handleModal={handleModal} projects={projects} />
+        <ProjectList />
       </Container>
     </Row>
   );
