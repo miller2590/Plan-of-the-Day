@@ -1,8 +1,11 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
+import { useMain } from "../../contexts/MainContext";
 
-function ProjectList({ projects, handleModal }) {
+function ProjectList() {
+  const { projects } = useMain();
+
   return (
     <Row>
       {projects.length === 0 ? (
@@ -10,11 +13,7 @@ function ProjectList({ projects, handleModal }) {
       ) : (
         projects.map((project) => (
           <Col key={project.id} xs={12} sm={6} md={4}>
-            <ProjectCard
-              handleModal={handleModal}
-              id={project.id}
-              title={project.title}
-            />
+            <ProjectCard id={project.id} title={project.title} />
           </Col>
         ))
       )}

@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Home from "./pages/Home";
 import WorkSpace from "./components/Project/WorkSpace";
+import MainContent from "./components/MainContent";
 
 const router = createBrowserRouter([
   {
@@ -11,12 +12,17 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: "/home",
     element: <Home />,
-  },
-  {
-    path: "/home/workSpace/:id",
-    element: <WorkSpace />,
+    children: [
+      {
+        path: "/home",
+        element: <MainContent />,
+      },
+      {
+        path: "dashboard/workSpace/:id",
+        element: <WorkSpace />,
+      },
+    ],
   },
 ]);
 

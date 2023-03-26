@@ -2,19 +2,23 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useMain } from "../contexts/MainContext";
 
-function TitleModal({
-  showTitle,
-  toggleShowTitle,
-  handleCreateProject,
-  title,
-  handleTitle,
-}) {
+function TitleModal() {
+  const {
+    handleCreateProject,
+    toggleShowTitle,
+    handleTitle,
+    title,
+    showTitle,
+  } = useMain();
+
   const handleSave = (e) => {
     e.preventDefault();
     handleCreateProject(title);
     toggleShowTitle();
   };
+
   return (
     <>
       <Modal show={showTitle} onHide={toggleShowTitle}>

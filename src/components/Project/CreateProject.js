@@ -1,26 +1,17 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import TitleModal from "../TitleModal";
+import { useMain } from "../../contexts/MainContext";
 
-function CreateProject({
-  handleCreateProject,
-  toggleShowTitle,
-  showTitle,
-  title,
-  handleTitle,
-}) {
+function CreateProject() {
+  const { toggleShowTitle } = useMain();
   const handleClick = () => {
     toggleShowTitle();
   };
+
   return (
     <div>
-      <TitleModal
-        showTitle={showTitle}
-        handleCreateProject={handleCreateProject}
-        title={title}
-        handleTitle={handleTitle}
-        toggleShowTitle={toggleShowTitle}
-      />
+      <TitleModal />
       <Button size="sm" variant="success" onClick={handleClick}>
         Create a Project
       </Button>
