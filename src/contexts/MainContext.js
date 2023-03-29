@@ -1,22 +1,9 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase-config";
+import useDashboardState from "../hooks/useDashboardState";
 
-import {
-  collection,
-  addDoc,
-  doc,
-  deleteDoc,
-  query,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, addDoc, doc, deleteDoc } from "firebase/firestore";
 
 export const MainContext = createContext();
 
@@ -25,30 +12,12 @@ export function useMain() {
 }
 
 export function MainProvider({ children }) {
-  const [projects, setProjects] = useState([]);
+  // const [projects, setProjects] = useState([]);
   const [showTitle, setShowTitle] = useState(false);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState({ show: false, id: "" });
   const { currentUser } = useAuth();
-
-  const todoRef = useMemo(
-    () => query(collection(db, "users", currentUser.uid, "projects")),
-    [currentUser.uid]
-  );
-
-  useEffect(() => {
-    const unsub = onSnapshot(todoRef, (querySnap) => {
-      const docIdRef = [];
-      querySnap.forEach((doc) => {
-        // Project card Object
-        docIdRef.push({ id: doc.id, title: doc.data().title });
-      });
-      setProjects(docIdRef);
-    });
-    return () => {
-      unsub();
-    };
-  }, [todoRef]);
+  const [projects] = useDashboardState();
 
   const handleModal = useCallback((id) => {
     setShowModal((prevState) => ({ show: !prevState.show, id: id || "" }));
