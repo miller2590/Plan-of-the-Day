@@ -10,9 +10,9 @@ function CloseModal() {
     <>
       <Modal show={showModal.show} onHide={() => handleModal()}>
         <Modal.Header closeButton>
-          <Modal.Title>Delete Todo List</Modal.Title>
+          <Modal.Title>Delete Project</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this list?</Modal.Body>
+        <Modal.Body>Are you sure you want to delete this project?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModal}>
             Cancel
