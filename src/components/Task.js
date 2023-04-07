@@ -1,14 +1,30 @@
 import React from "react";
-import AccordionItem from "react-bootstrap/esm/AccordionItem";
-import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
-import AccordionBody from "react-bootstrap/esm/AccordionBody";
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../utils/Constants.js";
 
 function Task(props) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.TASK,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
-    <AccordionItem eventKey={props.eventKey}>
-      <AccordionHeader>{props.title}</AccordionHeader>
-      <AccordionBody>{props.description}</AccordionBody>
-    </AccordionItem>
+    <div
+      ref={drag}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        border: "1px solid black",
+        borderRadius: "2.5%",
+        margin: "1rem",
+        padding: ".5rem",
+        textAlign: "center",
+      }}
+    >
+      <h3>{props.title}</h3>
+      <p>{props.description}</p>
+    </div>
   );
 }
 

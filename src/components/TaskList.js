@@ -1,22 +1,31 @@
 import React from "react";
 import Task from "./Task";
-
-import { Accordion } from "react-bootstrap";
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../utils/Constants.js";
 
 function TaskList(props) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.TASK,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
-    <Accordion defaultActiveKey="0">
+    <ul style={{ listStyle: "none" }}>
       {props.taskData.map((task) => {
         return (
-          <Task
+          <li
+            ref={drag}
+            className="task"
             key={task.eventKey}
-            eventKey={task.eventKey}
-            title={task.title}
-            description={task.description}
-          />
+            style={{ opacity: isDragging ? 0.5 : 1 }}
+          >
+            <Task title={task.title} description={task.description} />
+          </li>
         );
       })}
-    </Accordion>
+    </ul>
   );
 }
 
