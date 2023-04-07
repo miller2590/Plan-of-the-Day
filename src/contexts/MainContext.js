@@ -12,7 +12,6 @@ export function useMain() {
 }
 
 export function MainProvider({ children }) {
-  // const [projects, setProjects] = useState([]);
   const [showTitle, setShowTitle] = useState(false);
   const [title, setTitle] = useState("");
   const [showModal, setShowModal] = useState({ show: false, id: "" });
