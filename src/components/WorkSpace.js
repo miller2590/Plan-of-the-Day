@@ -1,50 +1,150 @@
 import React, { useState } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { Container } from "react-bootstrap";
-import TaskCard from "./TaskCard";
+  DndContext,
+  DragOverlay,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+
+import TaskCardColumn from "./TaskCardColumn";
+import Item from "./Item";
+import { arrayMove, insertAtIndex, removeAtIndex } from "../utils/array";
 
 function WorkSpace() {
-  const [languages, setLanguages] = useState([
-    "JavaScript",
-    "Python",
-    "TypeScript",
-  ]);
+  const [itemGroups, setItemGroups] = useState({
+    group1: ["1", "2", "3"],
+    group2: ["4", "5", "6"],
+    group3: ["7", "8", "9"],
+  });
+  const [activeId, setActiveId] = useState(null);
 
-  function handleDragEnd(event) {
-    const { active, over } = event;
-    console.log("ACTIVE: " + active.id);
-    console.log("OVER: " + over.id);
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
-    if (active.id !== over.id) {
-      setLanguages((items) => {
-        const activeIndex = items.indexOf(active.id);
-        const overIndex = items.indexOf(over.id);
+  const handleDragStart = ({ active }) => setActiveId(active.id);
 
-        // activeIndex moves to overIndex inside items
-        return arrayMove(items, activeIndex, overIndex);
+  const handleDragCancel = () => setActiveId(null);
+
+  const handleDragOver = ({ active, over }) => {
+    const overId = over?.id;
+
+    if (!overId) {
+      return;
+    }
+
+    const activeContainer = active.data.current.sortable.containerId;
+    const overContainer = over.data.current?.sortable.containerId || over.id;
+
+    if (activeContainer !== overContainer) {
+      // This is pushing the list to make room for the hover item
+      setItemGroups((itemGroups) => {
+        const activeIndex = active.data.current.sortable.index;
+        const overIndex =
+          over.id in itemGroups
+            ? itemGroups[overContainer].length + 1
+            : over.data.current.sortable.index;
+
+        return moveBetweenContainers(
+          itemGroups,
+          activeContainer,
+          activeIndex,
+          overContainer,
+          overIndex,
+          active.id
+        );
       });
     }
-  }
+  };
+
+  const handleDragEnd = ({ active, over }) => {
+    if (!over) {
+      setActiveId(null);
+      return;
+    }
+
+    if (active.id !== over.id) {
+      const activeContainer = active.data.current.sortable.containerId;
+      const overContainer = over.data.current?.sortable.containerId || over.id;
+      const activeIndex = active.data.current.sortable.index;
+      const overIndex =
+        over.id in itemGroups
+          ? itemGroups[overContainer].length + 1
+          : over.data.current.sortable.index;
+
+      setItemGroups((itemGroups) => {
+        let newItems;
+        if (activeContainer === overContainer) {
+          newItems = {
+            ...itemGroups,
+            [overContainer]: arrayMove(
+              itemGroups[overContainer],
+              activeIndex,
+              overIndex
+            ),
+          };
+        } else {
+          newItems = moveBetweenContainers(
+            itemGroups,
+            activeContainer,
+            activeIndex,
+            overContainer,
+            overIndex,
+            active.id
+          );
+        }
+
+        return newItems;
+      });
+    }
+
+    setActiveId(null);
+  };
+
+  const moveBetweenContainers = (
+    items,
+    activeContainer,
+    activeIndex,
+    overContainer,
+    overIndex,
+    item
+  ) => {
+    return {
+      ...items,
+      [activeContainer]: removeAtIndex(items[activeContainer], activeIndex),
+      [overContainer]: insertAtIndex(items[overContainer], overIndex, item),
+    };
+  };
 
   return (
-    <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
-      <Container className="p-3" style={{ width: "50%" }} align="center">
-        <h1>WorkSpace</h1>
-        <SortableContext
-          items={languages}
-          strategy={verticalListSortingStrategy}
-        >
-          {/* We need components that use the useSortable Hook */}
-          {languages.map((language) => (
-            <TaskCard key={language} id={language} />
-          ))}
-        </SortableContext>
-      </Container>
+    <DndContext
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragCancel={handleDragCancel}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="container" style={{ display: "flex" }}>
+        {Object.keys(itemGroups).map((group) => (
+          <TaskCardColumn
+            id={group}
+            items={itemGroups[group]}
+            activeId={activeId}
+            key={group}
+          />
+        ))}
+      </div>
+      <DragOverlay>
+        {activeId ? <Item id={activeId} dragOverlay /> : null}
+      </DragOverlay>
     </DndContext>
   );
 }

@@ -1,29 +1,30 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Card } from "react-bootstrap";
 
-function TaskCard(props) {
-  // props.id
-  // JavaScript
+import Item from "./Item";
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.id });
+const TaskCard = ({ id }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
 
   const style = {
-    // Allows us to pick up a Card and move it around
-    // This is best practice according to the docs
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? 0.5 : 1,
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card body className="m-3">
-        {props.id}
-      </Card>
-    </div>
+    <li style={style} ref={setNodeRef} {...attributes} {...listeners}>
+      <Item id={id} />
+    </li>
   );
-}
+};
 
 export default TaskCard;
