@@ -30,10 +30,13 @@ function WorkSpace() {
     })
   );
 
-  const handleDragStart = ({ active }) => setActiveId(active.id);
+  const handleDragStart = ({ active }) => {
+    setActiveId(active.id);
+  };
 
   const handleDragCancel = () => setActiveId(null);
 
+  // handleDragOver moves over containers and inserts item overlay in list
   const handleDragOver = ({ active, over }) => {
     const overId = over?.id;
 
@@ -45,9 +48,8 @@ function WorkSpace() {
     const overContainer = over.data.current?.sortable.containerId || over.id;
 
     if (activeContainer !== overContainer) {
-      // This is pushing the list to make room for the hover item
       setItemGroups((itemGroups) => {
-        const activeIndex = active.data.current.sortable.index;
+        const activeIdex = active.data.current.sortable.index;
         const overIndex =
           over.id in itemGroups
             ? itemGroups[overContainer].length + 1
@@ -56,7 +58,7 @@ function WorkSpace() {
         return moveBetweenContainers(
           itemGroups,
           activeContainer,
-          activeIndex,
+          activeIdex,
           overContainer,
           overIndex,
           active.id
@@ -65,6 +67,7 @@ function WorkSpace() {
     }
   };
 
+  // handleDragEnd enters item into list, also moves between containers,
   const handleDragEnd = ({ active, over }) => {
     if (!over) {
       setActiveId(null);
@@ -73,7 +76,7 @@ function WorkSpace() {
 
     if (active.id !== over.id) {
       const activeContainer = active.data.current.sortable.containerId;
-      const overContainer = over.data.current?.sortable.containerId || over.id;
+      const overContainer = active.data.current.sortable.containerId;
       const activeIndex = active.data.current.sortable.index;
       const overIndex =
         over.id in itemGroups
@@ -81,9 +84,9 @@ function WorkSpace() {
           : over.data.current.sortable.index;
 
       setItemGroups((itemGroups) => {
-        let newItems;
+        let updatedItems;
         if (activeContainer === overContainer) {
-          newItems = {
+          updatedItems = {
             ...itemGroups,
             [overContainer]: arrayMove(
               itemGroups[overContainer],
@@ -92,7 +95,7 @@ function WorkSpace() {
             ),
           };
         } else {
-          newItems = moveBetweenContainers(
+          updatedItems = moveBetweenContainers(
             itemGroups,
             activeContainer,
             activeIndex,
@@ -101,12 +104,9 @@ function WorkSpace() {
             active.id
           );
         }
-
-        return newItems;
+        return updatedItems;
       });
     }
-
-    setActiveId(null);
   };
 
   const moveBetweenContainers = (
@@ -128,17 +128,18 @@ function WorkSpace() {
     <DndContext
       sensors={sensors}
       onDragStart={handleDragStart}
-      onDragCancel={handleDragCancel}
       onDragOver={handleDragOver}
+      onDragCancel={handleDragCancel}
       onDragEnd={handleDragEnd}
     >
       <div className="container" style={{ display: "flex" }}>
         {Object.keys(itemGroups).map((group) => (
           <TaskCardColumn
             id={group}
-            items={itemGroups[group]}
-            activeId={activeId}
+            title={group}
             key={group}
+            items={itemGroups[group]}
+            actitiveId={activeId}
           />
         ))}
       </div>

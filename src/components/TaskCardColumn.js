@@ -4,7 +4,7 @@ import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable";
 
 import TaskCard from "./TaskCard";
 
-const TaskCardColumn = ({ id, items }) => {
+const TaskCardColumn = ({ id, items, title }) => {
   const { setNodeRef } = useDroppable({ id });
 
   const style = {
@@ -21,6 +21,7 @@ const TaskCardColumn = ({ id, items }) => {
   return (
     <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
       <ul style={style} ref={setNodeRef}>
+        <h3>{title}</h3>
         {items.map((item) => (
           <TaskCard key={item} id={item} />
         ))}

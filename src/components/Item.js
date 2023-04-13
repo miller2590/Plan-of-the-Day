@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "react-bootstrap";
 
 const Item = ({ id, dragOverlay }) => {
   const style = {
@@ -17,9 +18,9 @@ const Item = ({ id, dragOverlay }) => {
   };
 
   return (
-    <div style={style} className="item">
+    <Card style={style} className="item">
       Item {id}
-    </div>
+    </Card>
   );
 };
 
