@@ -13,13 +13,29 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import TaskCardColumn from "./TaskCardColumn";
 import Item from "./Item";
 import { arrayMove, insertAtIndex, removeAtIndex } from "../utils/array";
+import { Container } from "react-bootstrap";
+import AddCard from "./AddCard";
 
 function WorkSpace() {
   const [itemGroups, setItemGroups] = useState({
-    group1: ["1", "2", "3"],
-    group2: ["4", "5", "6"],
-    group3: ["7", "8", "9"],
+    group1: {
+      title: "Unassigned",
+      items: ["1", "2", "3"],
+    },
+    group2: {
+      title: "To Do",
+      items: ["4", "5", "6"],
+    },
+    group3: {
+      title: "In Progress",
+      items: ["7", "8", "9"],
+    },
+    group4: {
+      title: "Done",
+      items: ["10", "11", "12"],
+    },
   });
+
   const [activeId, setActiveId] = useState(null);
 
   const sensors = useSensors(
@@ -30,10 +46,13 @@ function WorkSpace() {
     })
   );
 
-  const handleDragStart = ({ active }) => setActiveId(active.id);
+  const handleDragStart = ({ active }) => {
+    setActiveId(active.id);
+  };
 
   const handleDragCancel = () => setActiveId(null);
 
+  // handleDragOver moves item overlay over containers and inserts item overlay into list
   const handleDragOver = ({ active, over }) => {
     const overId = over?.id;
 
@@ -45,18 +64,17 @@ function WorkSpace() {
     const overContainer = over.data.current?.sortable.containerId || over.id;
 
     if (activeContainer !== overContainer) {
-      // This is pushing the list to make room for the hover item
       setItemGroups((itemGroups) => {
-        const activeIndex = active.data.current.sortable.index;
+        const activeIdex = active.data.current.sortable.index;
         const overIndex =
           over.id in itemGroups
-            ? itemGroups[overContainer].length + 1
+            ? itemGroups[overContainer].items.length + 1
             : over.data.current.sortable.index;
 
         return moveBetweenContainers(
           itemGroups,
           activeContainer,
-          activeIndex,
+          activeIdex,
           overContainer,
           overIndex,
           active.id
@@ -65,7 +83,9 @@ function WorkSpace() {
     }
   };
 
+  // handleDragEnd enters actual item into list
   const handleDragEnd = ({ active, over }) => {
+    // if user drops item outside of a container
     if (!over) {
       setActiveId(null);
       return;
@@ -73,26 +93,29 @@ function WorkSpace() {
 
     if (active.id !== over.id) {
       const activeContainer = active.data.current.sortable.containerId;
-      const overContainer = over.data.current?.sortable.containerId || over.id;
+      const overContainer = active.data.current.sortable.containerId;
       const activeIndex = active.data.current.sortable.index;
       const overIndex =
         over.id in itemGroups
-          ? itemGroups[overContainer].length + 1
+          ? itemGroups[overContainer].items.length + 1
           : over.data.current.sortable.index;
 
       setItemGroups((itemGroups) => {
-        let newItems;
+        let updatedItems;
         if (activeContainer === overContainer) {
-          newItems = {
+          updatedItems = {
             ...itemGroups,
-            [overContainer]: arrayMove(
-              itemGroups[overContainer],
-              activeIndex,
-              overIndex
-            ),
+            [overContainer]: {
+              title: itemGroups[overContainer].title,
+              items: arrayMove(
+                itemGroups[overContainer].items,
+                activeIndex,
+                overIndex
+              ),
+            },
           };
         } else {
-          newItems = moveBetweenContainers(
+          updatedItems = moveBetweenContainers(
             itemGroups,
             activeContainer,
             activeIndex,
@@ -101,12 +124,9 @@ function WorkSpace() {
             active.id
           );
         }
-
-        return newItems;
+        return updatedItems;
       });
     }
-
-    setActiveId(null);
   };
 
   const moveBetweenContainers = (
@@ -119,8 +139,14 @@ function WorkSpace() {
   ) => {
     return {
       ...items,
-      [activeContainer]: removeAtIndex(items[activeContainer], activeIndex),
-      [overContainer]: insertAtIndex(items[overContainer], overIndex, item),
+      [activeContainer]: {
+        title: itemGroups[activeContainer].title,
+        items: removeAtIndex(items[activeContainer].items, activeIndex),
+      },
+      [overContainer]: {
+        title: itemGroups[overContainer].title,
+        items: insertAtIndex(items[overContainer].items, overIndex, item),
+      },
     };
   };
 
@@ -128,20 +154,27 @@ function WorkSpace() {
     <DndContext
       sensors={sensors}
       onDragStart={handleDragStart}
-      onDragCancel={handleDragCancel}
       onDragOver={handleDragOver}
+      onDragCancel={handleDragCancel}
       onDragEnd={handleDragEnd}
     >
-      <div className="container" style={{ display: "flex" }}>
+      <h1>Work Space</h1>
+      <AddCard
+        uItems={"group1"}
+        itemGroups={itemGroups}
+        setuItems={setItemGroups}
+      />
+      <Container className="container" style={{ display: "flex" }}>
         {Object.keys(itemGroups).map((group) => (
           <TaskCardColumn
             id={group}
-            items={itemGroups[group]}
-            activeId={activeId}
+            title={itemGroups[group].title}
             key={group}
+            items={itemGroups[group].items}
+            actitiveId={activeId}
           />
         ))}
-      </div>
+      </Container>
       <DragOverlay>
         {activeId ? <Item id={activeId} dragOverlay /> : null}
       </DragOverlay>
