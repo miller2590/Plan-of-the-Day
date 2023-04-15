@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-function AddCard({ addCard, uItems, setuItems }) {
-  const [title, setTitle] = useState("");
+function AddCard({ uItems, setuItems, itemGroups }) {
+  const [newCard, setNewCard] = useState("");
 
   const handleTitle = (e) => {
-    setTitle(e.target.value);
+    setNewCard(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setuItems([...uItems, { title }]);
-    setTitle("");
+    setuItems((prev) => {
+      let updatedItems = {
+        ...prev,
+        [uItems]: {
+          title: itemGroups[uItems].title,
+          items: [...itemGroups[uItems].items, newCard],
+        },
+      };
+      return updatedItems;
+    });
+    setNewCard("");
   };
 
   return (
@@ -21,7 +30,7 @@ function AddCard({ addCard, uItems, setuItems }) {
         <Form.Control
           type="text"
           placeholder="Card Title"
-          value={title}
+          value={newCard}
           onChange={(e) => handleTitle(e)}
         />
       </Form.Group>

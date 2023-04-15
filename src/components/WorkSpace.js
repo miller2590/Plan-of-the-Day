@@ -13,13 +13,29 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import TaskCardColumn from "./TaskCardColumn";
 import Item from "./Item";
 import { arrayMove, insertAtIndex, removeAtIndex } from "../utils/array";
+import { Container } from "react-bootstrap";
+import AddCard from "./AddCard";
 
 function WorkSpace() {
   const [itemGroups, setItemGroups] = useState({
-    group1: ["1", "2", "3"],
-    group2: ["4", "5", "6"],
-    group3: ["7", "8", "9"],
+    group1: {
+      title: "Unassigned",
+      items: ["1", "2", "3"],
+    },
+    group2: {
+      title: "To Do",
+      items: ["4", "5", "6"],
+    },
+    group3: {
+      title: "In Progress",
+      items: ["7", "8", "9"],
+    },
+    group4: {
+      title: "Done",
+      items: ["10", "11", "12"],
+    },
   });
+
   const [activeId, setActiveId] = useState(null);
 
   const sensors = useSensors(
@@ -36,7 +52,7 @@ function WorkSpace() {
 
   const handleDragCancel = () => setActiveId(null);
 
-  // handleDragOver moves over containers and inserts item overlay in list
+  // handleDragOver moves item overlay over containers and inserts item overlay into list
   const handleDragOver = ({ active, over }) => {
     const overId = over?.id;
 
@@ -52,7 +68,7 @@ function WorkSpace() {
         const activeIdex = active.data.current.sortable.index;
         const overIndex =
           over.id in itemGroups
-            ? itemGroups[overContainer].length + 1
+            ? itemGroups[overContainer].items.length + 1
             : over.data.current.sortable.index;
 
         return moveBetweenContainers(
@@ -67,8 +83,9 @@ function WorkSpace() {
     }
   };
 
-  // handleDragEnd enters item into list, also moves between containers,
+  // handleDragEnd enters actual item into list
   const handleDragEnd = ({ active, over }) => {
+    // if user drops item outside of a container
     if (!over) {
       setActiveId(null);
       return;
@@ -80,7 +97,7 @@ function WorkSpace() {
       const activeIndex = active.data.current.sortable.index;
       const overIndex =
         over.id in itemGroups
-          ? itemGroups[overContainer].length + 1
+          ? itemGroups[overContainer].items.length + 1
           : over.data.current.sortable.index;
 
       setItemGroups((itemGroups) => {
@@ -88,11 +105,14 @@ function WorkSpace() {
         if (activeContainer === overContainer) {
           updatedItems = {
             ...itemGroups,
-            [overContainer]: arrayMove(
-              itemGroups[overContainer],
-              activeIndex,
-              overIndex
-            ),
+            [overContainer]: {
+              title: itemGroups[overContainer].title,
+              items: arrayMove(
+                itemGroups[overContainer].items,
+                activeIndex,
+                overIndex
+              ),
+            },
           };
         } else {
           updatedItems = moveBetweenContainers(
@@ -119,8 +139,14 @@ function WorkSpace() {
   ) => {
     return {
       ...items,
-      [activeContainer]: removeAtIndex(items[activeContainer], activeIndex),
-      [overContainer]: insertAtIndex(items[overContainer], overIndex, item),
+      [activeContainer]: {
+        title: itemGroups[activeContainer].title,
+        items: removeAtIndex(items[activeContainer].items, activeIndex),
+      },
+      [overContainer]: {
+        title: itemGroups[overContainer].title,
+        items: insertAtIndex(items[overContainer].items, overIndex, item),
+      },
     };
   };
 
@@ -132,17 +158,23 @@ function WorkSpace() {
       onDragCancel={handleDragCancel}
       onDragEnd={handleDragEnd}
     >
-      <div className="container" style={{ display: "flex" }}>
+      <h1>Work Space</h1>
+      <AddCard
+        uItems={"group1"}
+        itemGroups={itemGroups}
+        setuItems={setItemGroups}
+      />
+      <Container className="container" style={{ display: "flex" }}>
         {Object.keys(itemGroups).map((group) => (
           <TaskCardColumn
             id={group}
-            title={group}
+            title={itemGroups[group].title}
             key={group}
-            items={itemGroups[group]}
+            items={itemGroups[group].items}
             actitiveId={activeId}
           />
         ))}
-      </div>
+      </Container>
       <DragOverlay>
         {activeId ? <Item id={activeId} dragOverlay /> : null}
       </DragOverlay>
