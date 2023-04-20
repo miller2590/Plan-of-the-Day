@@ -11,14 +11,13 @@ function AddCard({ uItems, setuItems, itemGroups }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setuItems((prev) => {
-      let updatedItems = {
+      return {
         ...prev,
         [uItems]: {
           title: itemGroups[uItems].title,
           items: [...itemGroups[uItems].items, newCard],
         },
       };
-      return updatedItems;
     });
     setNewCard("");
   };
