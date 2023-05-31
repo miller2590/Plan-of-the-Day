@@ -40,9 +40,22 @@ export function MainProvider({ children }) {
   const handleCreateProject = async (title) => {
     const userRef = collection(db, "users");
 
-    await addDoc(collection(userRef, currentUser.uid, "projects"), {
-      title: title,
-    });
+    const newProjRef = await addDoc(
+      collection(userRef, currentUser.uid, "projects"),
+      {
+        title: title,
+      }
+    );
+
+    const unassignedRef = collection(newProjRef, "unassigned");
+    const todoRef = collection(newProjRef, "todo");
+    const inProgressRef = collection(newProjRef, "inProgress");
+    const doneRef = collection(newProjRef, "done");
+
+    await addDoc(unassignedRef, { name: { title } });
+    await addDoc(todoRef, { name: { title } });
+    await addDoc(inProgressRef, { name: { title } });
+    await addDoc(doneRef, { name: { title } });
   };
 
   const value = {

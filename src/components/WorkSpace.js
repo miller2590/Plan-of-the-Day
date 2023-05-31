@@ -20,19 +20,19 @@ function WorkSpace() {
   const [itemGroups, setItemGroups] = useState({
     group1: {
       title: "Unassigned",
-      items: ["1", "2", "3"],
+      items: [],
     },
     group2: {
       title: "To Do",
-      items: ["4", "5", "6"],
+      items: [],
     },
     group3: {
       title: "In Progress",
-      items: ["7", "8", "9"],
+      items: [],
     },
     group4: {
       title: "Done",
-      items: ["10", "11", "12"],
+      items: [],
     },
   });
 
