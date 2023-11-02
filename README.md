@@ -24,8 +24,10 @@ The application uses Firebase for the backend, including real-time database feat
 
 - [React.js](https://reactjs.org/)
 - [Firebase](https://firebase.google.com/) (Realtime Database and Authentication)
-- [React DnD](https://react-dnd.github.io/react-dnd/)
+- [DnD Kit]([https://react-dnd.github.io/react-dnd/](https://dndkit.com/))
 - [React Router](https://reactrouter.com/)
+- [React Bootstrap]([https://reactrouter.com/](https://react-bootstrap.netlify.app/))
+  
 
 ## Getting Started
 
